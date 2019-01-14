@@ -140,7 +140,6 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			add(image, BorderLayout.CENTER);
 			image.setIcon(load);
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-			setControlsEnabled(false);
 			LocalDateTime time = timePane.getTime();
 			String lang = langPane.getChoice();
 			String action = actionPane.getSelection();
@@ -150,7 +149,6 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			TaskManager.queue(new ActionHandler(action, lang, version, isPriest, time, this));
 		} else if (e.getSource().equals(closeHour)) {
 			closeHour.setEnabled(false);
-			popOut.setEnabled(false);
 			remove(scrollPane);
 			currentHTML = null;
 			add(image, BorderLayout.CENTER);
@@ -158,6 +156,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 				image.setIcon(sing);
 			repaint();
 		} else if (e.getSource().equals(popOut)) {
+			popOut.setEnabled(false);
 			JFrame parent = getParentFrame();
 			ViewFrame frame = new ViewFrame(currentHTML, "Canonical Hour", (MainFrame) parent);
 			frame.setLocationRelativeTo(this);
@@ -202,11 +201,5 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		this.add(scrollPane, BorderLayout.CENTER);
 		revalidate();
 		repaint();
-	}
-
-	public void setControlsEnabled(boolean enabled) {
-		timePane.setEnabled(enabled);
-		langPane.setEnabled(enabled);
-		actionPane.setEnabled(enabled);
 	}
 }

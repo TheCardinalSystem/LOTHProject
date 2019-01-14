@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
 import com.Cardinal.LOTH.Gui.Libraries.BorderLibrary;
+import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Task.ITask;
 import com.Cardinal.LOTH.Util.ClipboardUtils;
 
@@ -101,7 +102,7 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 		c.gridy = 0;
 		c.insets = new Insets(0, 0, otherMargin, 0);
 		anteDetailPane.add(mes, c);
-		
+
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 0, 0);
 		anteDetailPane.add(details, c);
@@ -116,6 +117,8 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 				frame.setVisible(true);
 			};
 		});
+
+		this.setIconImage(ImageLibrary.FAVICON.getImage());
 	}
 
 	@Override

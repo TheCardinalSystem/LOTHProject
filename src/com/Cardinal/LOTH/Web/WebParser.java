@@ -66,15 +66,18 @@ public class WebParser {
 
 		Element el = cropHourTable(doc, lang);
 
-		String html = addHeaderToHourTable(el, hour, lang, date);
+		String html = addHeaderToHourTable(el, doc, hour, lang, date);
 
 		return html;
 	}
 
-	public static String addHeaderToHourTable(Element hourTable, Hour header, String lang, LocalDate date) {
-		return "<body><center><div style='font-size:30'>" + header.toString()
-				+ "</div><div style='font-size:15;margin-bottom:50'>"
-				+ date.format(DateTimeFormatter.ofPattern("MMM dd, uuuu")) + "<br>"
+	public static String addHeaderToHourTable(Element hourTable, Document doc, Hour header, String lang,
+			LocalDate date) {
+		return "<body>"
+				+ doc.getElementsByTag("p").first().outerHtml().replaceFirst("<br\\s*\\/?>", "")
+						.replaceFirst("<br\\s*\\/?>", "")
+				+ "<center><div style='font-size:15;margin-bottom:20'>"
+				+ date.format(DateTimeFormatter.ofPattern("MMM dd, uuuu")) + " | "
 				+ (lang.indexOf("+") > 1 ? lang.replaceFirst("\\+", " - ") : lang).replaceFirst("Lat", "Latin")
 				+ "</div></center>" + hourTable.outerHtml() + "</body>";
 	}

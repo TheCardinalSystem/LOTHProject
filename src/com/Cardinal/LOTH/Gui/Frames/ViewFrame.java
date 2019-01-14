@@ -47,6 +47,7 @@ public class ViewFrame extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosed(java.awt.event.WindowEvent e) {
 				frame.setVisible(true);
+				
 			};
 		});
 
