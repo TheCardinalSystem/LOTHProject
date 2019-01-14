@@ -7,12 +7,12 @@ This project is solely owned by ***Cardinal System***/***bignose956*** and _no i
 
 ## 
 This project is powered by:
-[LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
-[Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)
-[Apache PDFBox](https://pdfbox.apache.org/)
-[iText](https://itextpdf.com/)
-[jsoup](https://jsoup.org/)
-[SLF4J](https://www.slf4j.org/)
+* [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
+* [Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)
+* [Apache PDFBox](https://pdfbox.apache.org/)
+* [iText](https://itextpdf.com/)
+* [jsoup](https://jsoup.org/)
+* [SLF4J](https://www.slf4j.org/)
 
 ## Support
 Support can be obtain at [the official github](https://github.com/TheCardinalSystem/LOTHProject "CardinalSystem Project") or the [not so official Discord](https://discordapp.com/invite/7Jh6Jd6 "Cardinal Support").
