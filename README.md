@@ -5,7 +5,7 @@ This program is used to load, view, print, and save various canonical hours from
 ## Resources
 This project is solely owned by ***Cardinal System***/***bignose956*** and _no individual_ may release custom versions without accrediting the project owner. All updates are to be obtained at [the official github](https://github.com/TheCardinalSystem/LOTHProject "Cardinal System Project") and no other location. This project is open source, thus _developers may append/alter_ the sources as they please.
 
-## 
+## Third Party Licenses
 This project is powered by:
 * [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
 * [Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)
