@@ -83,10 +83,6 @@ public class ImageUtils {
 			return image;
 		}
 
-		System.err.println("Details:\n\tOriginal Hieght: " + src.getHeight() + "\n\tOriginal Width: " + src.getWidth()
-				+ "\n\tNew Hieght: " + newCanvas.getHeight() + "\n\tNew Width: " + newCanvas.getWidth()
-				+ "\n\tNew Location: " + newCanvas.getX() + ", " + newCanvas.getY());
-
 		Image cropped = src.getSubimage(Math.toIntExact(Math.round(src.getWidth() / 2)),
 				Math.toIntExact(Math.round(src.getHeight() / 2)), Math.toIntExact(Math.round(newCanvas.getWidth())),
 				Math.toIntExact(Math.round(newCanvas.getHeight())));
@@ -127,6 +123,28 @@ public class ImageUtils {
 
 	}
 
+	public static Dimension getFillAspectRatio(int oldWidth, int oldHieght, int newWidth, int newHeight) {
+		return getFillAspectRatio(new Dimension(oldWidth, oldHieght), new Dimension(newWidth, newHeight));
+	}
+
+	public static Dimension getFillAspectRatio(Dimension imageSize, Dimension boundaries) {
+		int original_width = imageSize.width;
+		int original_height = imageSize.height;
+		int bound_width = boundaries.width;
+		int bound_height = boundaries.height;
+		int new_width = original_width;
+		int new_height = original_height;
+
+		if (original_height < original_width) {
+			new_height = bound_height;
+			new_width = (new_height * original_width) / original_height;
+		} else {
+			new_width = bound_width;
+			new_height = (new_width * original_height) / original_width;
+		}
+		return new Dimension(new_width, new_height);
+	}
+
 	/**
 	 * Resizes the given image to the given size while keeping all proportions the
 	 * same. The resulting image may be smaller than the passed dimensions.
@@ -162,38 +180,6 @@ public class ImageUtils {
 	 * @see ImageUtils#resizeImageCanvas(ImageIcon, Rectangle)
 	 */
 	public static Image resizeAspectRatio(Image image, Dimension desiredResize) {
-		/*
-		 * double h = (double) new ImageIcon(image).getIconHeight(); double w = (double)
-		 * new ImageIcon(image).getIconWidth(); double nh = (double)
-		 * desiredResize.getHeight(); double nw = (double) desiredResize.getWidth(); if
-		 * (h > nh || w > nw) { if (h > w) { double percentH = (nh / h) * (double) 100;
-		 * System.out.println(percentH); double tallCake = (double) h * (double)
-		 * percentH; double fatCake = (double) w * (double) percentH;
-		 * System.out.println(tallCake + ":" + fatCake);
-		 * 
-		 * String newTallCake = String.valueOf(tallCake / 100).substring(0,
-		 * String.valueOf(tallCake / 100).indexOf(".")); String newFatCake =
-		 * String.valueOf(fatCake / 100).substring(0, String.valueOf(fatCake /
-		 * 100).indexOf("."));
-		 * 
-		 * System.err.println(newTallCake + ":" + newFatCake);
-		 * 
-		 * return resizeImage(image, Integer.parseInt(newFatCake),
-		 * Integer.parseInt(newTallCake)); } else if (w > h) { double percentW = (nw /
-		 * w) * (double) 100; System.out.println(percentW); double tallCake = (double) h
-		 * * (double) percentW; double fatCake = (double) w * (double) percentW;
-		 * System.out.println(tallCake + ":" + fatCake);
-		 * 
-		 * String newTallCake = String.valueOf(tallCake / 100).substring(0,
-		 * String.valueOf(tallCake / 100).indexOf(".")); String newFatCake =
-		 * String.valueOf(fatCake / 100).substring(0, String.valueOf(fatCake /
-		 * 100).indexOf("."));
-		 * 
-		 * System.err.println(newTallCake + ":" + newFatCake);
-		 * 
-		 * return resizeImage(image, Integer.parseInt(newFatCake),
-		 * Integer.parseInt(newTallCake)); } }
-		 */
 		Dimension d = getSizeForAspectRatio(
 				new Dimension(new ImageIcon(image).getIconWidth(), new ImageIcon(image).getIconHeight()),
 				desiredResize);
@@ -201,7 +187,6 @@ public class ImageUtils {
 	}
 
 	public static Dimension getSizeForAspectRatio(Dimension imgSize, Dimension boundary) {
-
 		int original_width = imgSize.width;
 		int original_height = imgSize.height;
 		int bound_width = boundary.width;
@@ -209,22 +194,42 @@ public class ImageUtils {
 		int new_width = original_width;
 		int new_height = original_height;
 
-		// first check if we need to scale width
-		if (original_width > bound_width) {
-			// scale width to fit
-			new_width = bound_width;
-			// scale height to maintain aspect ratio
-			new_height = (new_width * original_height) / original_width;
-		}
+		if (bound_height < 0 || bound_width < 0) {
+			double ratio = bound_width < 0 ? ((double) original_width) / original_height
+					: ((double) original_height) / original_width;
 
-		// then check if we need to scale even with the new height
-		if (new_height > bound_height) {
-			// scale height to fit instead
-			new_height = bound_height;
-			// scale width to maintain aspect ratio
-			new_width = (new_height * original_width) / original_height;
-		}
+			new_width = (int) (bound_width < 0 ? bound_height * ratio : bound_width);
+			new_height = (int) (bound_height < 0 ? bound_width * ratio : bound_height);
+		} else {
 
+			if (bound_width > original_width && bound_height > original_height) {
+				if (original_height < original_width) {
+					new_height = bound_height;
+					new_width = (new_height * original_width) / original_height;
+				}
+				if (new_width > bound_width) {
+					new_width = bound_width;
+					new_height = (new_width * original_height) / original_width;
+				}
+			} else {
+
+				// first check if we need to scale width
+				if (original_width > bound_width) {
+					// scale width to fit
+					new_width = bound_width;
+					// scale height to maintain aspect ratio
+					new_height = (new_width * original_height) / original_width;
+				}
+
+				// then check if we need to scale even with the new height
+				if (new_height > bound_height) {
+					// scale height to fit instead
+					new_height = bound_height;
+					// scale width to maintain aspect ratio
+					new_width = (new_height * original_width) / original_height;
+				}
+			}
+		}
 		return new Dimension(new_width, new_height);
 	}
 

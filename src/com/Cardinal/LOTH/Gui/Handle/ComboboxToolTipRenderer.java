@@ -1,8 +1,11 @@
 package com.Cardinal.LOTH.Gui.Handle;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.util.List;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
+import javax.swing.JList;
 
 public class ComboboxToolTipRenderer extends DefaultListCellRenderer {
 
@@ -19,7 +22,6 @@ public class ComboboxToolTipRenderer extends DefaultListCellRenderer {
 		if (-1 < index && null != value && null != tooltips) {
 			list.setToolTipText(tooltips.get(index));
 		}
-		
 		return comp;
 	}
 

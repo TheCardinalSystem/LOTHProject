@@ -87,7 +87,7 @@ public class ActionHandler implements ITask {
 			in.hideLoadPane();
 			return null;
 		} else if (com.equals("Print")) {
-			JOptionPane.showMessageDialog(in, "Printing is slow. This will take a few minutes.", "Print",
+			JOptionPane.showMessageDialog(in, "Printing is slow. This will take about a minute.", "Print",
 					JOptionPane.INFORMATION_MESSAGE);
 			String html;
 			try {
@@ -131,10 +131,6 @@ public class ActionHandler implements ITask {
 								error, in.getParentFrame()));
 			}
 
-			/*
-			 * ViewFrame frame = new ViewFrame(html, "LOTH Prototype");
-			 * frame.setVisible(true); frame.setLocationRelativeTo(in);
-			 */
 			in.hideLoadPane();
 			in.displayHTML(html);
 			return null;

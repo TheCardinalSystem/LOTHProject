@@ -15,7 +15,8 @@ import javax.print.attribute.standard.JobName;
 import javax.print.attribute.standard.PrintQuality;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
 
 public class PrinterUtils {
 
@@ -28,15 +29,16 @@ public class PrinterUtils {
 
 		PrinterJob job = PrinterJob.getPrinterJob();
 
-		if(!job.printDialog(patts)) {
+		if (!job.printDialog(patts)) {
 			throw new PrinterException("User cancelled printing");
-		};
+		}
+		;
 
 		PrintService myService = job.getPrintService();
 
 		PDDocument doc = PDDocument.load(pdf);
 		job.setPrintService(myService);
-		job.setPageable(new PDFPageable(doc));
+		job.setPrintable(new PDFPrintable(doc, Scaling.SCALE_TO_FIT));
 
 		job.print(patts);
 		doc.close();

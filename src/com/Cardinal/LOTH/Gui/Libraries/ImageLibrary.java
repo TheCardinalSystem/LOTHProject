@@ -11,6 +11,7 @@ public enum ImageLibrary {
 
 	FAVICON("updatedlogo.png"), 
 	LOADING("loader.gif"), 
+	LOADING2("ajax-loader.gif"),
 	CARDINAL("logo.png"), 
 	SINGERS("singers.png"), 
 	BACKGROUND("combined.png");

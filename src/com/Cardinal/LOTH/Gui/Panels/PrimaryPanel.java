@@ -4,13 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -46,6 +47,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	private JPanel thatAndExecute, hourConts, timeAndVer;
 	private JLabel image;
 	private ImageIcon load, sing;
+	private Image loader, combined;
 
 	public PrimaryPanel(Dimension windowSize) {
 
@@ -77,12 +79,12 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 
 		thatAndExecute.setBorder(BorderLibrary.NORMAL.getBorder());
 
-		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
-
-		timeAndVer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		timeAndVer = new JPanel();
+		timeAndVer.setLayout(new BoxLayout(timeAndVer, BoxLayout.X_AXIS));
 		timeAndVer.add(verPane);
 		timeAndVer.add(timePane);
 
+		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
 		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
 		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
 				BorderFactory.createEmptyBorder(margin, 0, margin, 0)));
@@ -90,10 +92,21 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 				BorderFactory.createEmptyBorder(0, 0, 0, hgap / 2)));
 		timePane.setBorder(BorderFactory.createEmptyBorder(0, hgap / 2, 0, 0));
 
+		JScrollPane scr, scr1, scr2;
+
 		this.setLayout(new BorderLayout());
-		add(timeAndVer, BorderLayout.SOUTH);
-		add(langPane, BorderLayout.WEST);
-		add(thatAndExecute, BorderLayout.EAST);
+		add(scr = new JScrollPane(timeAndVer), BorderLayout.SOUTH);
+		add(scr1 = new JScrollPane(langPane), BorderLayout.WEST);
+		add(scr2 = new JScrollPane(thatAndExecute), BorderLayout.EAST);
+
+		scr.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scr.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		scr1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scr1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		scr2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scr2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		int width = (int) (windowSize.getWidth() * 0.6661786237188873),
 				hieght = (int) (windowSize.getHeight() * 0.6875);
@@ -101,32 +114,40 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		int width2 = (int) (windowSize.getWidth() * 0.7320644216691069),
 				hieght2 = (int) (windowSize.getHeight() * 0.9765625);
 
-		ToolkitImage img = (ToolkitImage) ImageLibrary.LOADING.getImage();
+		ToolkitImage img = (ToolkitImage) (loader = ImageLibrary.LOADING.getImage());
 
 		Dimension scale = ImageUtils.getSizeForAspectRatio(img.getWidth(), img.getHeight(), width2, hieght2);
 
 		load = new ImageIcon(img.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
 
-		image = new JLabel(
-				sing = new ImageIcon(ImageUtils.resizeAspectRatio(ImageLibrary.BACKGROUND.getImage(), width, hieght)));
+		image = new JLabel(sing = new ImageIcon(
+				ImageUtils.resizeAspectRatio(combined = ImageLibrary.BACKGROUND.getImage(), width, hieght)));
 
 		add(image, BorderLayout.CENTER);
 
 		initHTMLViewer();
-		/*
-		 * this.setLayout(new GridBagLayout());
-		 * 
-		 * GridBagConstraints c = new GridBagConstraints(); c.gridx = 0; c.gridy = 0;
-		 * add(langPane, c);
-		 * 
-		 * c.gridx = 4; c.gridy = 0; c.gridheight = 1; c.gridwidth = 1; add(actionPane,
-		 * c);
-		 * 
-		 * c.gridx = 1; c.gridy = 1; c.gridwidth = 4; c.gridheight = 2; add(timePane,
-		 * c);
-		 * 
-		 * c.gridx = 1; c.gridy = 4; c.gridheight = 1; c.gridwidth = 2; add(execute, c);
-		 */
+
+	}
+
+	public void resizeEvent(Dimension windowSize) {
+
+		Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(), image.getWidth(),
+				image.getHeight());
+
+		Dimension loadScale = ImageUtils.getFillAspectRatio(load.getIconWidth(), load.getIconHeight(),
+				image.getWidth(), image.getHeight());
+
+		load.setImage(loader.getScaledInstance(loadScale.width, loadScale.height, Image.SCALE_DEFAULT));
+		sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
+
+		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
+		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
+		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
+				BorderFactory.createEmptyBorder(margin, 0, margin, 0)));
+		verPane.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK),
+				BorderFactory.createEmptyBorder(0, 0, 0, hgap / 2)));
+		timePane.setBorder(BorderFactory.createEmptyBorder(0, hgap / 2, 0, 0));
+
 	}
 
 	@Override

@@ -19,5 +19,10 @@
 	<classpathentry kind="lib" path="Libs/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="Libs/fontbox-2.0.11.jar"/>
 	<classpathentry kind="lib" path="Libs/LGoodDatePicker-10.4.1.jar" sourcepath="Libs/LGoodDatePicker-10.4.1-sources.jar"/>
+	<classpathentry kind="lib" path="Libs/gson-2.8.5.jar" sourcepath="Libs/gson-2.8.5-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/LOTH/Libs/gson-2.8.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

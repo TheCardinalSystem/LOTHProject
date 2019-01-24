@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
+import com.Cardinal.LOTH.WorkspaceConstants;
 import com.Cardinal.LOTH.Gui.Libraries.BorderLibrary;
 import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Task.ITask;
@@ -139,7 +140,7 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 			copy.setEnabled(false);
 		} else if (e.getSource().equals(export)) {
 			export.setEnabled(false);
-			File output = new File(System.getProperty("user.home") + "\\.loth\\logs\\"
+			File output = new File(WorkspaceConstants.WORKINGDIRECTORY + "\\logs\\"
 					+ LocalDateTime.now().toString().replaceAll(":", ".") + ".err");
 
 			if (!output.getParentFile().exists())
