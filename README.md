@@ -10,6 +10,7 @@ This project is powered by:
 * [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
 * [Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)
 * [Apache PDFBox](https://pdfbox.apache.org/)
+* [Gson](https://github.com/google/gson)
 * [iText](https://itextpdf.com/)
 * [jsoup](https://jsoup.org/)
 * [SLF4J](https://www.slf4j.org/)
