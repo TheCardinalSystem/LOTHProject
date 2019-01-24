@@ -27,7 +27,7 @@ import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Task.TaskManager;
 import com.Cardinal.LOTH.Task.Tasks.TaskCheckUpdates;
 import com.Cardinal.LOTH.Task.Tasks.TaskUpdate;
-import com.Cardinal.LOTH.Update.UpdateController;
+import com.Cardinal.LOTH.Update.UpdateManager;
 import com.Cardinal.LOTH.Util.ImageUtils;
 
 import sun.awt.image.ToolkitImage;
@@ -105,7 +105,7 @@ public class UpdatePanel extends JPanel implements ActionListener {
 	}
 
 	public void noUpdates() {
-		label.setText("Everything up to date!");
+		label.setText("Everything is up to date!");
 		remove(image);
 		add(cont, c);
 		revalidate();
@@ -135,7 +135,7 @@ public class UpdatePanel extends JPanel implements ActionListener {
 		} else if (e.getSource().equals(later) || e.getSource().equals(cont)) {
 			if (restart) {
 				try {
-					UpdateController.restart(UpdateController.applied);
+					UpdateManager.restart(UpdateManager.applied);
 				} catch (IOException e1) {
 					Container parent = getParent();
 					while (!(parent instanceof JFrame)) {

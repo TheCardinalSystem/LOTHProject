@@ -6,8 +6,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Gui.Panels.IntroPane;
@@ -22,7 +20,7 @@ public class MainFrame extends JFrame {
 	private IntroPane pane;
 	private PrimaryPanel primPane;
 	private UpdatePanel upPane;
-	private JScrollPane scroll;
+	//private JScrollPane scroll;
 
 	public MainFrame(String title) {
 		super(title);
@@ -45,7 +43,7 @@ public class MainFrame extends JFrame {
 
 	public void proceed() {
 		if (proceed == 2) {
-			remove(scroll);
+			remove(upPane);
 			this.add(primPane = new PrimaryPanel(this.getSize()));
 
 			this.addComponentListener(new ComponentAdapter() {
@@ -57,9 +55,9 @@ public class MainFrame extends JFrame {
 		} else if (proceed == 1) {
 			remove(pane);
 			upPane = new UpdatePanel(this.getSize());
-			this.add(scroll = new JScrollPane(upPane));
-			scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			this.add(upPane);
+			//scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 			proceed++;
 		} else {
 			remove(pane);

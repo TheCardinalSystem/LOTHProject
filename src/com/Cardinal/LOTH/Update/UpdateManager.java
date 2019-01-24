@@ -1,6 +1,7 @@
 package com.Cardinal.LOTH.Update;
 
 import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.NoRouteToHostException;
 import java.net.URISyntaxException;
@@ -10,12 +11,29 @@ import java.util.Map;
 import com.Cardinal.LOTH.WorkspaceConstants;
 import com.Cardinal.LOTH.Util.WebUtils;
 import com.Cardinal.LOTH.Web.WebParser;
+import com.google.gson.JsonIOException;
 
-public class UpdateController {
+public class UpdateManager {
 
 	public static Path applied;
 
-	public static boolean checkForUpdates() throws IOException, URISyntaxException {
+	public static boolean init() {
+		String path = GsonHub.getProperty("updateTrash");
+
+		if (path != null) {
+			new File(path).delete();
+			try {
+				GsonHub.removeProperty("updateTrash");
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkForUpdates() throws URISyntaxException, IOException {
 		if (!WebUtils.checkNetworkConnection("www.github.com", 5000)) {
 			throw new NoRouteToHostException("Unable to reach remote host. Please check your internet connection.");
 		}

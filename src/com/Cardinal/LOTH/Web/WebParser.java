@@ -1,7 +1,5 @@
 package com.Cardinal.LOTH.Web;
 
-import java.awt.print.PrinterException;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -9,41 +7,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import javax.print.PrintException;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import org.jsoup.Connection.Method;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.Cardinal.LOTH.WorkspaceConstants;
-import com.Cardinal.LOTH.Gui.Frames.MainFrame;
-import com.Cardinal.LOTH.Update.GsonHub;
 import com.Cardinal.LOTH.Util.HourUtils.Hour;
 import com.Cardinal.LOTH.Util.WebUtils.WebLang;
 
 public class WebParser {
-	public static void main(String[] args) throws IOException, PrintException, PrinterException {
-
-		String path = GsonHub.getProperty("updateTrash");
-
-		if (path != null) {
-			new File(path).delete();
-			GsonHub.removeProperty("updateTrash");
-		}
-
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-
-		MainFrame frame = new MainFrame("LOTH Prototype");
-		frame.setVisible(true);
-	}
 
 	public static String getVersionLog() throws IOException, URISyntaxException {
 		Scanner sc = new Scanner(new URL(WorkspaceConstants.UPDATELOG).openStream(), "UTF-8");

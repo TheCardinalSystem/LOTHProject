@@ -3,6 +3,7 @@ package com.Cardinal.LOTH.Gui.Frames;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -31,11 +32,13 @@ import com.Cardinal.LOTH.Gui.Libraries.BorderLibrary;
 import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Task.ITask;
 import com.Cardinal.LOTH.Util.ClipboardUtils;
+import com.Cardinal.LOTH.io.ConsoleHandler;
 
 public class ErrorFrame extends JFrame implements ITask, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	private JFrame parent;
 	private JLabel mes;
 	private JTextArea area;
 	private JButton copy, export, close, details;
@@ -47,6 +50,9 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 	public ErrorFrame(String error, String stacktrace, JFrame frame) {
 
 		super("Error");
+
+		parent = frame;
+		frame.setVisible(false);
 
 		mes = new JLabel(error, SwingConstants.CENTER);
 		area = new JTextArea(stacktrace);
@@ -111,8 +117,6 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 		this.setLayout(new BorderLayout());
 		add(anteDetailPane, BorderLayout.CENTER);
 
-		frame.setVisible(false);
-
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosed(java.awt.event.WindowEvent e) {
 				frame.setVisible(true);
@@ -149,6 +153,9 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 			try {
 				PrintWriter writer = new PrintWriter(output);
 				writer.print(area.getText());
+				writer.println();
+				writer.println("Console Output ---------------");
+				writer.println(ConsoleHandler.getStringOutputStream().getString());
 				writer.flush();
 				writer.close();
 			} catch (FileNotFoundException e1) {
@@ -162,6 +169,24 @@ public class ErrorFrame extends JFrame implements ITask, ActionListener {
 			}
 		}
 
+	}
+
+	public ErrorFrame scaleToParent() {
+		this.setSize(parent.getSize());
+		this.setLocation(parent.getLocation());
+		return this;
+	}
+
+	public ErrorFrame boldenFont() {
+		Font font = new Font(mes.getFont().getName(), Font.BOLD, (int) (mes.getFont().getSize() * 1.5));
+		mes.setFont(font);
+		//Font but = new Font("ButFont", font.getStyle(), font.getSize());
+		copy.setFont(font);
+		export.setFont(font);
+		close.setFont(font);
+		details.setFont(font);
+		
+		return this;
 	}
 
 	@Override

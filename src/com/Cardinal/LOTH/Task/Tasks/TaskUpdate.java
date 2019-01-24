@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import com.Cardinal.LOTH.Gui.Frames.ErrorFrame;
 import com.Cardinal.LOTH.Gui.Panels.UpdatePanel;
 import com.Cardinal.LOTH.Task.ITask;
-import com.Cardinal.LOTH.Update.UpdateController;
+import com.Cardinal.LOTH.Update.UpdateManager;
 
 public class TaskUpdate implements ITask {
 
@@ -22,7 +22,7 @@ public class TaskUpdate implements ITask {
 	@Override
 	public ITask[] runTask() {
 		try {
-			UpdateController.update(false);
+			UpdateManager.update(false);
 			pane.updatesComplete();
 		} catch (Exception e) {
 			pane.updatesComplete();
