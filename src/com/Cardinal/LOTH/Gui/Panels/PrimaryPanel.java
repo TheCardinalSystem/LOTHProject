@@ -48,6 +48,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	private JLabel image;
 	private ImageIcon load, sing;
 	private Image loader, combined;
+	private Dimension originalLoadSize;
 
 	public PrimaryPanel(Dimension windowSize) {
 
@@ -116,6 +117,8 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 
 		ToolkitImage img = (ToolkitImage) (loader = ImageLibrary.LOADING.getImage());
 
+		originalLoadSize = new Dimension(img.getWidth(), img.getHeight());
+
 		Dimension scale = ImageUtils.getSizeForAspectRatio(img.getWidth(), img.getHeight(), width2, hieght2);
 
 		load = new ImageIcon(img.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
@@ -123,23 +126,25 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		image = new JLabel(sing = new ImageIcon(
 				ImageUtils.resizeAspectRatio(combined = ImageLibrary.BACKGROUND.getImage(), width, hieght)));
 
+		image.setBackground(Color.BLACK);
 		add(image, BorderLayout.CENTER);
 
 		initHTMLViewer();
-
 	}
 
 	public void resizeEvent(Dimension windowSize) {
 
-		Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(), image.getWidth(),
-				image.getHeight());
+		if (image.getIcon().equals(sing)) {
+			Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(),
+					image.getWidth(), image.getHeight());
 
-		Dimension loadScale = ImageUtils.getFillAspectRatio(load.getIconWidth(), load.getIconHeight(),
-				image.getWidth(), image.getHeight());
+			sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
+		} else {
+			Dimension loadScale = ImageUtils.getFillAspectRatio((int) originalLoadSize.getWidth(),
+					(int) originalLoadSize.getHeight(), image.getWidth(), image.getHeight());
 
-		load.setImage(loader.getScaledInstance(loadScale.width, loadScale.height, Image.SCALE_DEFAULT));
-		sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
-
+			load.setImage(loader.getScaledInstance(loadScale.width, loadScale.height, Image.SCALE_DEFAULT));
+		}
 		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
 		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
 		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
@@ -147,7 +152,6 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		verPane.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK),
 				BorderFactory.createEmptyBorder(0, 0, 0, hgap / 2)));
 		timePane.setBorder(BorderFactory.createEmptyBorder(0, hgap / 2, 0, 0));
-
 	}
 
 	@Override
@@ -170,6 +174,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			TaskManager.queue(new ActionHandler(action, lang, version, isPriest, time, this));
 		} else if (e.getSource().equals(closeHour)) {
 			closeHour.setEnabled(false);
+			popOut.setEnabled(false);
 			remove(scrollPane);
 			currentHTML = null;
 			add(image, BorderLayout.CENTER);
@@ -177,7 +182,6 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 				image.setIcon(sing);
 			repaint();
 		} else if (e.getSource().equals(popOut)) {
-			popOut.setEnabled(false);
 			JFrame parent = getParentFrame();
 			ViewFrame frame = new ViewFrame(currentHTML, "Canonical Hour", (MainFrame) parent);
 			frame.setLocationRelativeTo(this);
@@ -195,6 +199,12 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	}
 
 	public void hideLoadPane() {
+		Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(), image.getWidth(),
+				image.getHeight());
+
+		if (sing.getIconHeight() != scale.getHeight() || sing.getIconWidth() != scale.getWidth()) {
+			sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
+		}
 		image.setIcon(sing);
 		execute.setEnabled(true);
 	}

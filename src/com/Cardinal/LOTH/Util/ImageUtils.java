@@ -75,7 +75,7 @@ public class ImageUtils {
 	 * @see ImageUtils#resizeImageCanvas(ImageIcon, Rectangle)
 	 * @see ImageUtils#resizeImage(ImageIcon, int, int)
 	 */
-	public static Image resizeImageCanvas(Image image, Rectangle newCanvas) {
+	public static Image resizeImageCanvas(Image image, Dimension newCanvas) {
 
 		BufferedImage src = (BufferedImage) image;
 
@@ -102,7 +102,7 @@ public class ImageUtils {
 	 * @see ImageUtils#resizeImageCanvas(Image, Rectangle)
 	 * @see ImageUtils#resizeImage(Image, int, int)
 	 */
-	public static ImageIcon resizeImageCanvas(ImageIcon image, Rectangle newCanvas) {
+	public static ImageIcon resizeImageCanvas(ImageIcon image, Dimension newCanvas) {
 		return new ImageIcon(resizeImageCanvas(image.getImage(), newCanvas));
 	}
 
@@ -135,13 +135,14 @@ public class ImageUtils {
 		int new_width = original_width;
 		int new_height = original_height;
 
-		if (original_height < original_width) {
+		if (original_height > original_width) {
 			new_height = bound_height;
 			new_width = (new_height * original_width) / original_height;
 		} else {
 			new_width = bound_width;
 			new_height = (new_width * original_height) / original_width;
 		}
+		//java.awt.Dimension[width=486,height=612]
 		return new Dimension(new_width, new_height);
 	}
 

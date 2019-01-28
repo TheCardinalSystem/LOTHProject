@@ -8,7 +8,7 @@ import com.Cardinal.LOTH.io.ConsoleHandler;
 
 public class WorkspaceConstants {
 
-	public static final String VERSION = "1.1.1", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
+	public static final String VERSION = "1.1.2", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
 			UPDATELOG = "https://raw.githubusercontent.com/TheCardinalSystem/LOTHProject/master/versionLog.json",
 			PROPERTIESFILE = WORKINGDIRECTORY + "\\properties.json";
 

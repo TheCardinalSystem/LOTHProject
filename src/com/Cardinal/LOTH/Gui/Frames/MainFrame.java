@@ -20,9 +20,8 @@ public class MainFrame extends JFrame {
 	private IntroPane pane;
 	private PrimaryPanel primPane;
 	private UpdatePanel upPane;
-	//private JScrollPane scroll;
 
-	public MainFrame(String title) {
+	public MainFrame(String title, boolean skipIntro) {
 		super(title);
 
 		this.setIconImage(ImageLibrary.FAVICON.getImage());
@@ -34,30 +33,35 @@ public class MainFrame extends JFrame {
 		this.setSize((int) (width / 1.9), (int) height / 2);
 		this.setLocation((int) width / 4, (int) height / 4);
 
-		pane = new IntroPane(ImageUtils.resizeAspectRatio(ImageLibrary.CARDINAL.getImage(), this.getWidth() / 2,
-				this.getHeight() / 2), this, 0.02F, 0.03F, 0);
-		this.add(pane);
+		if (skipIntro) { // Used for developing
+			this.add(primPane = new PrimaryPanel(this.getSize()));
+			addResizeListener();
+		} else {
+			this.add(pane = new IntroPane(ImageUtils.resizeAspectRatio(ImageLibrary.CARDINAL.getImage(),
+					this.getWidth() / 2, this.getHeight() / 2), this, 0.02F, 0.03F, 0));
+		}
 	}
 
 	private int proceed = 0;
+
+	private void addResizeListener() {
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				primPane.resizeEvent(getSize());
+			}
+		});
+	}
 
 	public void proceed() {
 		if (proceed == 2) {
 			remove(upPane);
 			this.add(primPane = new PrimaryPanel(this.getSize()));
-
-			this.addComponentListener(new ComponentAdapter() {
-				@Override
-				public void componentResized(ComponentEvent e) {
-					primPane.resizeEvent(getSize());
-				}
-			});
+			addResizeListener();
 		} else if (proceed == 1) {
 			remove(pane);
 			upPane = new UpdatePanel(this.getSize());
 			this.add(upPane);
-			//scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			//scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 			proceed++;
 		} else {
 			remove(pane);
