@@ -123,6 +123,14 @@ public class UpdatePanel extends JPanel implements ActionListener {
 		restart = true;
 	}
 
+	public void updatesFailed() {
+		remove(image);
+		label.setText("Update failed!");
+		add(cont, c);
+		revalidate();
+		repaint();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(yes)) {
