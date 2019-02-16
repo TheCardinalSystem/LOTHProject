@@ -25,7 +25,7 @@ public class TaskUpdate implements ITask {
 			UpdateManager.update(false);
 			pane.updatesComplete();
 		} catch (Exception e) {
-			pane.updatesComplete();
+			pane.updatesFailed();
 			Container parent = pane.getParent();
 			while (!(parent instanceof JFrame)) {
 				parent = parent.getParent();
