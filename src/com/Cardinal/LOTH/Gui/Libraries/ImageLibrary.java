@@ -14,8 +14,10 @@ public enum ImageLibrary {
 	LOADING2("ajax-loader.gif"),
 	CARDINAL("logo.png"), 
 	SINGERS("singers.png"), 
-	BACKGROUND("combined.png");
-
+	BACKGROUND("combined.png"),
+	EXIT("exit.png"),
+	HELP("help.png");
+	
 	/**
 	 * The image instance of 'this'.
 	 */

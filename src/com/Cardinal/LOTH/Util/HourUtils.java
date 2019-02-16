@@ -87,7 +87,7 @@ public class HourUtils {
 				case Prima:
 					return "Prime";
 				case Tertia:
-					return toString();
+					return "Terce";
 				case Sexta:
 					return "Sext";
 				case Nona:

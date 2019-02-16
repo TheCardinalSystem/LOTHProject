@@ -22,6 +22,7 @@ public class UpdateManager {
 
 		if (path != null) {
 			new File(path).delete();
+			new File(WorkspaceConstants.HELPDIRECTORY).delete();
 			try {
 				GsonHub.removeProperty("updateTrash");
 			} catch (JsonIOException | IOException e) {
