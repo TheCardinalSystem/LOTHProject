@@ -24,5 +24,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/LOTH/Libs/gson-2.8.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="Libs/zip4j_1.3.2.jar" sourcepath="Libs/zip4j_src_1.3.2.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
