@@ -26,7 +26,7 @@ public class TaskExtractHelp implements ITask {
 
 	@Override
 	public ITask[] runTask() {
-		if (System.getProperty("os.name").toLowerCase().indexOf("win") < 0) {
+		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
 			try {
 				File f = new File(WorkspaceConstants.HELPDIRECTORY, "LOTHProject.chm");
 
