@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -36,18 +37,9 @@ public class TaskExtractHelp implements ITask {
 
 					if (!f.getParentFile().exists())
 						f.getParentFile().mkdirs();
+					
+					Files.copy(ClassLoader.getSystemResourceAsStream("assets/Help/LOTHHelp.chm"), f.toPath());
 
-					InputStream stream = ClassLoader.getSystemResourceAsStream("assets/Help/LOTHProject.chm");
-					FileOutputStream out = new FileOutputStream(f);
-
-					byte[] buffer = new byte[2048];
-					@SuppressWarnings("unused")
-					int i;
-					while ((i = stream.read(buffer)) > 0) {
-						out.write(buffer);
-					}
-					out.flush();
-					out.close();
 				}
 				Desktop.getDesktop().open(f);
 			} catch (IOException e) {

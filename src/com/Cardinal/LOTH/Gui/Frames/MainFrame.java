@@ -36,7 +36,6 @@ public class MainFrame extends JFrame {
 		this.setLocation((int) width / 4, (int) height / 4);
 
 		this.bar = new MainMenuBar(this);
-		this.setJMenuBar(bar);
 
 		if (skipIntro) { // Used for developing
 			this.add(primPane = new PrimaryPanel(this.getSize()));
@@ -63,6 +62,7 @@ public class MainFrame extends JFrame {
 			remove(upPane);
 			this.add(primPane = new PrimaryPanel(this.getSize()));
 			addResizeListener();
+			this.setJMenuBar(bar);
 		} else if (proceed == 1) {
 			remove(pane);
 			upPane = new UpdatePanel(this.getSize());
