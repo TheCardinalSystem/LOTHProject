@@ -9,15 +9,17 @@ This project is solely owned by ***Cardinal System***/***bignose956*** and _no i
 This project is powered by:
 * [LGoodDatePicker](https://github.com/LGoodDatePicker/LGoodDatePicker)
 * [Apache Commons Logging](https://commons.apache.org/proper/commons-logging/)
+* [Apache Commons IO](https://commons.apache.org/proper/commons-io/)
 * [Apache PDFBox](https://pdfbox.apache.org/)
 * [Gson](https://github.com/google/gson)
 * [iText](https://itextpdf.com/)
 * [jsoup](https://jsoup.org/)
 * [SLF4J](https://www.slf4j.org/)
+* [Zip4J](http://www.lingala.net/zip4j/)
 
 ## Support
 Support can be obtain at [the official github](https://github.com/TheCardinalSystem/LOTHProject "CardinalSystem Project") or the [not so official Discord](https://discordapp.com/invite/7Jh6Jd6 "Cardinal Support").
 
-###### Latest release v1.1.0 - ©Copyright Cardinal System Developement 2019
+###### Latest release v1.3.0 - ©Copyright Cardinal System Developement 2019
 
 ###### Any misuse of latest versions is punishable by law.
