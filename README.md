@@ -20,6 +20,6 @@ This project is powered by:
 ## Support
 Support can be obtain at [the official github](https://github.com/TheCardinalSystem/LOTHProject "CardinalSystem Project") or the [not so official Discord](https://discordapp.com/invite/7Jh6Jd6 "Cardinal Support").
 
-###### Latest release v1.1.0 - ©Copyright Cardinal System Developement 2019
+###### Latest release v1.3.0 - ©Copyright Cardinal System Developement 2019
 
 ###### Any misuse of latest versions is punishable by law.
