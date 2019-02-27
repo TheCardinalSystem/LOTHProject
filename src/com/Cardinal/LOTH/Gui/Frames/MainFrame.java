@@ -12,6 +12,7 @@ import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Gui.Panels.IntroPane;
 import com.Cardinal.LOTH.Gui.Panels.PrimaryPanel;
 import com.Cardinal.LOTH.Gui.Panels.UpdatePanel;
+import com.Cardinal.LOTH.Update.UpdateManager;
 import com.Cardinal.LOTH.Util.ImageUtils;
 
 public class MainFrame extends JFrame {
@@ -37,7 +38,7 @@ public class MainFrame extends JFrame {
 
 		this.bar = new MainMenuBar(this);
 
-		if (skipIntro) { // Used for developing
+		if (skipIntro || UpdateManager.skipUpdates) { // Used for developing
 			this.add(primPane = new PrimaryPanel(this.getSize()));
 			addResizeListener();
 		} else {
@@ -67,6 +68,7 @@ public class MainFrame extends JFrame {
 			remove(pane);
 			upPane = new UpdatePanel(this.getSize());
 			this.add(upPane);
+			remove(pane);
 			proceed++;
 		} else {
 			remove(pane);

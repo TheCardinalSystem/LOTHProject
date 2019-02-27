@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+
 import com.Cardinal.LOTH.WorkspaceConstants;
 import com.Cardinal.LOTH.Util.WebUtils;
 import com.Cardinal.LOTH.Web.WebParser;
@@ -16,15 +18,16 @@ import com.google.gson.JsonIOException;
 public class UpdateManager {
 
 	public static Path applied;
+	public static boolean skipUpdates = false;
 
 	public static boolean init() {
-		String path = GsonHub.getProperty("updateTrash");
+		String path = GsonHub.getProperty(WorkspaceConstants.UPDATEPROPERTY);
 
 		if (path != null) {
-			new File(path).delete();
-			new File(WorkspaceConstants.HELPDIRECTORY).delete();
 			try {
-				GsonHub.removeProperty("updateTrash");
+				skipUpdates = FileUtils.deleteQuietly(new File(path));
+				FileUtils.deleteDirectory(new File(WorkspaceConstants.HELPDIRECTORY));
+				GsonHub.removeProperty(WorkspaceConstants.UPDATEPROPERTY);
 			} catch (JsonIOException | IOException e) {
 				e.printStackTrace();
 				return false;

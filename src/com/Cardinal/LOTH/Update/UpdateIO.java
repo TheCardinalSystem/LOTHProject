@@ -36,7 +36,7 @@ public class UpdateIO {
 		File f = getJarFile();
 		String path = f.getAbsolutePath(), path2 = updatePath.toString();
 		path = path.substring(path.indexOf("file") + 6).replaceAll("(%20)", " ");
-		GsonHub.setProperty("updateTrash", path);
+		GsonHub.setProperty(WorkspaceConstants.UPDATEPROPERTY, path);
 		if (path.endsWith(".jar")) {
 			return Files.move(updatePath,
 					Paths.get(path.substring(0, path.lastIndexOf("\\")) + path2.substring(path2.lastIndexOf("\\"))),

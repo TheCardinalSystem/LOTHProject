@@ -1,5 +1,6 @@
 package com.Cardinal.LOTH.Task.Tasks;
 
+import java.awt.Desktop;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.time.LocalDateTime;
 
 import javax.print.PrintException;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import com.Cardinal.LOTH.Gui.Frames.ErrorFrame;
@@ -45,6 +45,7 @@ public class ActionHandler implements ITask {
 		if (com.equals("Export PDF")) {
 			JFileChooser chooser = new JFileChooser(System.getProperty("user.home"));
 			chooser.setFileSelectionMode(JFileChooser.SAVE_DIALOG);
+
 			chooser.setFileFilter(new FileFilter() {
 
 				@Override
@@ -54,11 +55,11 @@ public class ActionHandler implements ITask {
 
 				@Override
 				public boolean accept(File f) {
-					return f.getName().toLowerCase().endsWith(".pdf");
+					return f.isDirectory() || f.getName().toLowerCase().endsWith(".pdf");
 				}
 			});
 
-			chooser.showOpenDialog(in);
+			chooser.showSaveDialog(in);
 
 			File output = chooser.getSelectedFile();
 
@@ -67,10 +68,14 @@ public class ActionHandler implements ITask {
 				return null;
 			}
 
+			if (output.isDirectory())
+				output = new File(output, "LOTH" + ti.toString().replaceAll(":", ".") + ".pdf");
+
 			String html;
+			File file;
 			try {
 				html = WebParser.getHtmlForHour(HourUtils.getHour(ti.toLocalTime()), la, ver, pr, ti.toLocalDate());
-				PDFUtils.saveHtmlToPdf(output, html);
+				file = PDFUtils.saveHtmlToPdf(output, html);
 			} catch (IOException e) {
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
@@ -84,11 +89,18 @@ public class ActionHandler implements ITask {
 										: "An unknown error occurred:",
 								error, in.getParentFrame()));
 			}
+			try {
+				if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+					Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+				} else {
+					Desktop.getDesktop().open(file.getParentFile());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			in.hideLoadPane();
 			return null;
 		} else if (com.equals("Print")) {
-			JOptionPane.showMessageDialog(in, "Printing is slow. This will take about a minute.", "Print",
-					JOptionPane.INFORMATION_MESSAGE);
 			String html;
 			try {
 				html = WebParser.getHtmlForHour(HourUtils.getHour(ti.toLocalTime()), la, ver, pr, ti.toLocalDate());
