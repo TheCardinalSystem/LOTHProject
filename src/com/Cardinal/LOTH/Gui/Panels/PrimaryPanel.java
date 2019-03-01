@@ -39,7 +39,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	private static final String[] actions = { "View", "Loads the hour into this window", "Print",
 			"Sends the hour to your printer", "Export PDF", "Saves the hour to a chosen directory" };
 
-	private TimePrompt timePane;
+	private TimePanel timePane;
 	private ActionPanel actionPane;
 	private LangPanel langPane;
 	private VersionPanel verPane;
@@ -52,7 +52,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 
 	public PrimaryPanel(Dimension windowSize) {
 
-		timePane = new TimePrompt(windowSize);
+		timePane = new TimePanel(windowSize);
 		langPane = new LangPanel();
 		actionPane = new ActionPanel(windowSize, actions);
 		verPane = new VersionPanel();
@@ -133,18 +133,8 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	}
 
 	public void resizeEvent(Dimension windowSize) {
+		checkImageScales();
 
-		if (image.getIcon().equals(sing)) {
-			Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(),
-					image.getWidth(), image.getHeight());
-
-			sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
-		} else {
-			Dimension loadScale = ImageUtils.getFillAspectRatio((int) originalLoadSize.getWidth(),
-					(int) originalLoadSize.getHeight(), image.getWidth(), image.getHeight());
-
-			load.setImage(loader.getScaledInstance(loadScale.width, loadScale.height, Image.SCALE_DEFAULT));
-		}
 		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
 		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
 		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
@@ -152,6 +142,21 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		verPane.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK),
 				BorderFactory.createEmptyBorder(0, 0, 0, hgap / 2)));
 		timePane.setBorder(BorderFactory.createEmptyBorder(0, hgap / 2, 0, 0));
+	}
+
+	public void checkImageScales() {
+		Dimension scale = ImageUtils.getSizeForAspectRatio(sing.getIconWidth(), sing.getIconHeight(), image.getWidth(),
+				image.getHeight());
+
+		Dimension loadScale = ImageUtils.getFillAspectRatio((int) originalLoadSize.getWidth(),
+				(int) originalLoadSize.getHeight(), image.getWidth(), image.getHeight());
+
+		if (sing.getIconHeight() != scale.getHeight() || sing.getIconWidth() != scale.getWidth()) {
+			sing.setImage(combined.getScaledInstance(scale.width, scale.height, Image.SCALE_DEFAULT));
+		}
+		if (load.getIconHeight() != loadScale.getHeight() || load.getIconWidth() != loadScale.getWidth()) {
+			load.setImage(loader.getScaledInstance(loadScale.width, loadScale.height, Image.SCALE_DEFAULT));
+		}
 	}
 
 	@Override
@@ -164,6 +169,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			currentHTML = null;
 			add(image, BorderLayout.CENTER);
 			image.setIcon(load);
+			checkImageScales();
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			LocalDateTime time = timePane.getTime();
 			String lang = langPane.getChoice();
@@ -180,6 +186,7 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			add(image, BorderLayout.CENTER);
 			if (!image.getIcon().equals(sing))
 				image.setIcon(sing);
+			checkImageScales();
 			repaint();
 		} else if (e.getSource().equals(popOut)) {
 			JFrame parent = getParentFrame();

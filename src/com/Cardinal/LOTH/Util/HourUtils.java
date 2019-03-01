@@ -75,6 +75,29 @@ public class HourUtils {
 			}
 		}
 
+		public LocalTime time() {
+			switch (this) {
+			case Matutinum:
+				return LocalTime.MIDNIGHT;
+			case Laudes:
+				return LocalTime.of(3, 0);
+			case Prima:
+				return LocalTime.of(6, 0);
+			case Tertia:
+				return LocalTime.of(9, 0);
+			case Sexta:
+				return LocalTime.of(12, 0);
+			case Nona:
+				return LocalTime.of(15, 0);
+			case Vesperae:
+				return LocalTime.of(18, 0);
+			case Completorium:
+				return LocalTime.of(21, 0);
+			default:
+				return null;
+			}
+		}
+
 		public String toString(WebLang lang) {
 			if (lang.equals(WebLang.LAT))
 				return this.equals(Vesperae) ? "Vespera" : toString();

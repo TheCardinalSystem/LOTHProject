@@ -41,6 +41,7 @@ public class MainFrame extends JFrame {
 		if (skipIntro || UpdateManager.skipUpdates) { // Used for developing
 			this.add(primPane = new PrimaryPanel(this.getSize()));
 			addResizeListener();
+			this.setJMenuBar(bar);
 		} else {
 			this.add(pane = new IntroPane(ImageUtils.resizeAspectRatio(ImageLibrary.CARDINAL.getImage(),
 					this.getWidth() / 2, this.getHeight() / 2), this, 0.02F, 0.03F, 0));

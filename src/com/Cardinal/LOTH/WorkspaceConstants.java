@@ -11,7 +11,7 @@ import com.google.gson.JsonIOException;
 
 public class WorkspaceConstants {
 
-	public static final String VERSION = "1.3.0", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
+	public static final String VERSION = "1.4.0", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
 			HELPDIRECTORY = WORKINGDIRECTORY + "\\Help",
 			UPDATELOG = "https://raw.githubusercontent.com/TheCardinalSystem/LOTHProject/master/versionLog.json",
 			PROPERTIESFILE = WORKINGDIRECTORY + "\\properties.json", UPDATEPROPERTY = "updateTrash";

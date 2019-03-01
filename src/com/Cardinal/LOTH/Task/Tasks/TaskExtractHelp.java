@@ -48,15 +48,24 @@ public class TaskExtractHelp implements ITask {
 			}
 		} else {
 			try {
-				File f = new File(WorkspaceConstants.HELPDIRECTORY, "Help.zip");
-				Files.copy(ClassLoader.getSystemResourceAsStream("assets/Help/Help.zip"), f.toPath());
+				File target = new File(WorkspaceConstants.HELPDIRECTORY, "Welcome.html");
 
-				ZipFile zip = new ZipFile(f);
+				if (!target.exists()) {
+					File f = new File(WorkspaceConstants.HELPDIRECTORY, "Help.zip");
 
-				zip.extractAll(f.getParent());
+					if (!f.getParentFile().exists())
+						f.getParentFile().mkdirs();
 
-				f.delete();
-				Desktop.getDesktop().browse(new File(WorkspaceConstants.HELPDIRECTORY, "Welcome.html").toURI());
+					Files.copy(ClassLoader.getSystemResourceAsStream("assets/Help/Help.zip"), f.toPath());
+
+					ZipFile zip = new ZipFile(f);
+
+					zip.extractAll(f.getParent());
+
+					f.delete();
+				}
+
+				Desktop.getDesktop().browse(target.toURI());
 			} catch (IOException | ZipException e) {
 				StringWriter sw = new StringWriter();
 				PrintWriter pw = new PrintWriter(sw);
