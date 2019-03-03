@@ -7,6 +7,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
+import com.Cardinal.LOTH.Gui.GUIManager;
 import com.Cardinal.LOTH.Gui.Components.MainMenuBar;
 import com.Cardinal.LOTH.Gui.Libraries.ImageLibrary;
 import com.Cardinal.LOTH.Gui.Panels.IntroPane;
@@ -35,7 +36,7 @@ public class MainFrame extends JFrame {
 		double height = screenSize.getHeight();
 		this.setSize((int) (width / 1.9), (int) height / 2);
 		this.setLocation((int) width / 4, (int) height / 4);
-
+		
 		this.bar = new MainMenuBar(this);
 
 		if (skipIntro || UpdateManager.skipUpdates) { // Used for developing
@@ -54,6 +55,7 @@ public class MainFrame extends JFrame {
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
+				GUIManager.updateUIFonts();
 				primPane.resizeEvent(getSize());
 			}
 		});

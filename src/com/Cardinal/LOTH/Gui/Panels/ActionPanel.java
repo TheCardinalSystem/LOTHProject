@@ -26,7 +26,7 @@ public class ActionPanel extends JPanel {
 		heading = new JLabel("Please select an action:");
 		priest = new JCheckBox("I am a priest");
 		renderer = new ComboboxToolTipRenderer();
-
+		
 		ArrayList<String> tooltips = new ArrayList<String>();
 		for (int i = 0; i < actions.length; i++) {
 			if (i % 2 == 0) {

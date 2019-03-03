@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.CompoundBorder;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -85,8 +86,8 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 		timeAndVer.add(verPane);
 		timeAndVer.add(timePane);
 
-		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
-		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
+		int hgap = (int) (windowSize.getWidth() * 0.0632064421669107);
+		int margin = (int) (windowSize.getHeight() * 0.0120833333333333);
 		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
 				BorderFactory.createEmptyBorder(margin, 0, margin, 0)));
 		verPane.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK),
@@ -133,15 +134,21 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 	}
 
 	public void resizeEvent(Dimension windowSize) {
-		checkImageScales();
+		int hgap = (int) (windowSize.getWidth() * 0.0432064421669107);
+		int margin = (int) (windowSize.getHeight() * 0.0120833333333333);
 
-		int hgap = (int) (windowSize.getWidth() * 0.0732064421669107);
-		int margin = (int) (windowSize.getHeight() * 0.0220833333333333);
 		timeAndVer.setBorder(new CompoundBorder(BorderLibrary.NORMAL.getBorder(),
 				BorderFactory.createEmptyBorder(margin, 0, margin, 0)));
 		verPane.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK),
 				BorderFactory.createEmptyBorder(0, 0, 0, hgap / 2)));
 		timePane.setBorder(BorderFactory.createEmptyBorder(0, hgap / 2, 0, 0));
+
+		timePane.resizeEvent(windowSize);
+
+		if(closeHour.isEnabled())
+			revalidate();
+		
+		SwingUtilities.invokeLater(() -> checkImageScales());
 	}
 
 	public void checkImageScales() {
@@ -170,7 +177,6 @@ public class PrimaryPanel extends JPanel implements ActionListener {
 			add(image, BorderLayout.CENTER);
 			image.setIcon(load);
 			checkImageScales();
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			LocalDateTime time = timePane.getTime();
 			String lang = langPane.getChoice();
 			String action = actionPane.getSelection();

@@ -4,14 +4,14 @@ import java.io.IOException;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.Cardinal.LOTH.Gui.UIManager;
+import com.Cardinal.LOTH.Gui.GUIManager;
 import com.Cardinal.LOTH.Update.UpdateManager;
 import com.Cardinal.LOTH.io.ConsoleHandler;
 import com.google.gson.JsonIOException;
 
 public class WorkspaceConstants {
 
-	public static final String VERSION = "1.4.0", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
+	public static final String VERSION = "1.5.0", WORKINGDIRECTORY = System.getProperty("user.home") + "\\.loth",
 			HELPDIRECTORY = WORKINGDIRECTORY + "\\Help",
 			UPDATELOG = "https://raw.githubusercontent.com/TheCardinalSystem/LOTHProject/master/versionLog.json",
 			PROPERTIESFILE = WORKINGDIRECTORY + "\\properties.json", UPDATEPROPERTY = "updateTrash";
@@ -21,12 +21,12 @@ public class WorkspaceConstants {
 		UpdateManager.init();
 
 		try {
-			UIManager.setSystemLookAndFeel();
+			GUIManager.setSystemLookAndFeel();
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 
-		UIManager.initGUI();
+		GUIManager.initGUI();
 	}
 }
